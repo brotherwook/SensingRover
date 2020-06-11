@@ -1,7 +1,6 @@
 import RPi.GPIO as GPIO
 import time
 
-
 class RgbLed:
     #  상수 선언
     RED = "red"
@@ -61,10 +60,9 @@ class RgbLed:
         if self.__bluepin is not None:
             GPIO.output(self.__bluepin, GPIO.HIGH)
 
-
 if __name__ == "__main__":
     try:
-        led = RgbLed(16, 18, 22)
+        led = RgbLed(29, 31, 36)
         for i in range(2):
             led.red()
             time.sleep(1)
