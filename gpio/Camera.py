@@ -3,7 +3,7 @@ import paho.mqtt.client as mqtt
 import threading
 import base64
 
-class ImageMqttPublisher:
+class Camera:
     def __init__(self, brokerIp, brokerPort, pubTopic):
         self.brokerIp = brokerIp
         self.brokerPort = brokerPort
@@ -22,10 +22,10 @@ class ImageMqttPublisher:
         self.client.loop_forever() # 연결 시켜주고 끊키면 재연결 시켜줌
 
     def __on_connect(self, client, userdata, flags, rc):
-        print("ImageMqttClient mqtt broker connected")
+        print("Camer mqtt broker connected")
 
     def __on_disconnect(self, client, userdata, rc):
-        print("ImageMqttClient mqtt broker disconnected")
+        print("Camera mqtt broker disconnected")
 
     def disconnect(self):
         self.client.disconnect() # 명시적으로 연결을 끊어서 loop_forever가 재연결 하지 않음
@@ -54,8 +54,9 @@ if __name__ == "__main__":
     videoCapture.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
     videoCapture.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
 
-    imageMqttPublisher = ImageMqttPublisher("192.168.3.250", 1883, "/camerapub")
-    imageMqttPublisher.connect()
+    camera = Camera("192.168.3.250", 1883, "/camerapub")
+
+    camera.connect()
 
     while True:
         if videoCapture.isOpened():
@@ -63,10 +64,10 @@ if __name__ == "__main__":
             if not retval:
                 print("video capture fail")
                 break
-            imageMqttPublisher.sendBase64(frame)
+            camera.sendBase64(frame)
             print("send")
         else:
             break
 
-    imageMqttPublisher.disconnect()
+    camera.disconnect()
     videoCapture.release()
