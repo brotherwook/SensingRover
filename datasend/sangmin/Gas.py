@@ -1,6 +1,8 @@
 import time
-from pcf8591 import  Pcf8591
-from RgbLed import  RgbLed
+import threading
+import  pcf8591
+import  RgbLed
+
 class Gas:
 
     def __init__(self,pcf8591,ain=0):
@@ -13,8 +15,8 @@ class Gas:
 
 if __name__ == "__main__":
     try:
-        pcf8591 = Pcf8591(0x48)
-        led = RgbLed(11,13,15)
+        pcf8591 = pcf8591.Pcf8591(0x48)
+        led = RgbLed.RgbLed(11,13,15)
         sensor = Gas(pcf8591,0)
         while True:
             gas = sensor.read()
