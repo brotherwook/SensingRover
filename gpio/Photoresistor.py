@@ -1,14 +1,21 @@
 from gpio.Pcf8591 import Pcf8591
 import time
+import threading
 
-class Photoresistor:
+class Photoresistor(threading.Thread):
     def __init__(self, pcf8591, ain=0):
         self.__pcf8591 = pcf8591
         self.__ain = ain
+        self.photolevel = 0
+        super().__init__(daemon=True)
+        super().start()
 
     def read(self):
         value = self.__pcf8591.read(self.__ain)
         return value
+
+    def run(self):
+        self.photolevel = self.read()
 
 if __name__ == '__main__':
     try:

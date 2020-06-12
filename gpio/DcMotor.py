@@ -2,6 +2,7 @@ import time
 import RPi.GPIO as GPIO
 import gpio.Pca9685 as Pca9685
 
+
 class DcMotor:
     def __init__(self, pca9685):
         GPIO.setmode(GPIO.BOARD)
@@ -9,8 +10,12 @@ class DcMotor:
         channel = [11, 12, 13, 15]
         GPIO.setup(channel, GPIO.OUT, initial=GPIO.HIGH)
         self.__pca9685 = pca9685
+        self.speed = 0
+        self.direction = "Stopped"
 
     def forward(self):
+        self.direction = "Forward"
+
         # 왼쪽 바퀴
         GPIO.output(11, GPIO.LOW)
         GPIO.output(12, GPIO.HIGH)
@@ -20,6 +25,8 @@ class DcMotor:
         GPIO.output(15, GPIO.HIGH)
 
     def backward(self):
+        self.direction = "Backward"
+
         # 왼쪽 바퀴
         GPIO.output(11, GPIO.HIGH)
         GPIO.output(12, GPIO.LOW)
@@ -29,6 +36,8 @@ class DcMotor:
         GPIO.output(15, GPIO.LOW)
 
     def stop(self):
+        self.direction = "Stopped"
+        self.speed = 0
         # 왼쪽 바퀴
         GPIO.output(11, GPIO.HIGH)
         GPIO.output(12, GPIO.HIGH)
@@ -38,9 +47,15 @@ class DcMotor:
         GPIO.output(15, GPIO.HIGH)
 
     def setSpeed(self, speed):
-        # 0 ~ 4095
         self.__pca9685.write(5, speed)
         self.__pca9685.write(4, speed)
+        # 0 ~ 4095
+        while not self.speed == speed:
+            if self.speed > speed:
+                self.speed -= 1
+            else:
+                self.speed += 1
+        self.speed = speed
 
 
 if __name__ == '__main__':
