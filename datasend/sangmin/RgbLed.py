@@ -1,8 +1,8 @@
-import RPi.GPIO as GPIO
+import Jetson.GPIO as GPIO
 import time
 
 class RgbLed:
-    #  상수 선언
+    # 상수 선언
     RED = "red"
     GREEN = "green"
     BLUE = "blue"
@@ -24,6 +24,7 @@ class RgbLed:
         if bluepin is not None:
             GPIO.setup(bluepin, GPIO.OUT, initial=GPIO.HIGH)
 
+
     def red(self):
         self.state = RgbLed.RED
         if self.__redpin is not None:
@@ -35,21 +36,21 @@ class RgbLed:
 
     def green(self):
         self.state = RgbLed.GREEN
-        if self.__greenpin is not None:
-            GPIO.output(self.__greenpin, GPIO.LOW)
         if self.__redpin is not None:
             GPIO.output(self.__redpin, GPIO.HIGH)
+        if self.__greenpin is not None:
+            GPIO.output(self.__greenpin, GPIO.LOW)
         if self.__bluepin is not None:
             GPIO.output(self.__bluepin, GPIO.HIGH)
 
     def blue(self):
         self.state = RgbLed.BLUE
-        if self.__bluepin is not None:
-            GPIO.output(self.__bluepin, GPIO.LOW)
         if self.__redpin is not None:
             GPIO.output(self.__redpin, GPIO.HIGH)
         if self.__greenpin is not None:
             GPIO.output(self.__greenpin, GPIO.HIGH)
+        if self.__bluepin is not None:
+            GPIO.output(self.__bluepin, GPIO.LOW)
 
     def off(self):
         self.state = None
@@ -60,15 +61,13 @@ class RgbLed:
         if self.__bluepin is not None:
             GPIO.output(self.__bluepin, GPIO.HIGH)
 
+
 if __name__ == "__main__":
+
     try:
-        led = RgbLed(29, 31, 36)
+        led = RgbLed(redpin=11, greenpin=12, bluepin=13)
         for i in range(2):
             led.red()
-            time.sleep(1)
-            led.off()
-
-            led.blue()
             time.sleep(1)
             led.off()
 
@@ -76,9 +75,13 @@ if __name__ == "__main__":
             time.sleep(1)
             led.off()
 
-    # Ctrl+C눌렀을 때 예외 발생
+            led.blue()
+            time.sleep(1)
+            led.off()
+
     except KeyboardInterrupt:
         print()
+
     finally:
         led.off()
         print("program exit")
