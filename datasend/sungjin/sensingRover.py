@@ -34,7 +34,7 @@ class SensingRover:
         self.lcd = Lcd1602(0x27)
         self.camera = Camera
 
-    def message(self):
+    def sensorMessage(self):
         message = {}
         message["buzzer"] = self.buzzer.state # on, off
         message["dcmotor_speed"] = str(self.dcmotor.speed) # pwm값
