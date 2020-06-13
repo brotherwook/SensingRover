@@ -39,8 +39,8 @@ class MqttNetwork:
         # ))
 
     def __connect(self):
-        self.__client.connect(self.__brokerIp, self.__brokerPort)
         self.__stop = False
+        self.__client.connect(self.__brokerIp, self.__brokerPort)
         self.__client.loop_forever()
 
     def __sensorPublish(self):
@@ -72,5 +72,5 @@ class MqttNetwork:
 
 if __name__ == "__main__":
     mqttNetwork = MqttNetwork(brokerIp="192.168.3.250", brokerPort=1883,
-                              sensorTopic="/sensor", cameraTopic="/sensor", commandTopic="/sensor") ###################!!!!!!!!!!!!!!!!!!!!!!
+                              sensorTopic="/sensor", cameraTopic="/camerapub", commandTopic="/command") ###################!!!!!!!!!!!!!!!!!!!!!!
     mqttNetwork.start()
