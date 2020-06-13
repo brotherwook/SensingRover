@@ -32,7 +32,7 @@ class SensingRover:
         self.tracker = Tracker(32) # 클래스 생성자에서 스레드 생성
         self.lcd = Lcd1602(0x27)
 
-    def message(self):
+    def sensorMessage(self): ################## 이름 변경 message -> sensorMessage
         message = {}
         message["buzzer"] = self.buzzer.state # on, off
         message["dcmotor_speed"] = str(self.dcmotor.speed) # pwm값
@@ -50,6 +50,10 @@ class SensingRover:
         message["tracker"] = self.tracker.state # black , white 수시로 변경되서 얘도 스레딩처리
         message = json.dumps(message)
         return message
+    
+    def cameraMessage(self): ################## 추가 부분
+        message = self.camera.message #########
+        return message ########################
 
     def write(self,message):
         self.DCMoter.setSpeed(message["speed"])
