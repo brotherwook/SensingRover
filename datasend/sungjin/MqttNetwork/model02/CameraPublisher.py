@@ -3,6 +3,7 @@ import threading
 import time
 from datasend.sungjin.sensingRover import SensingRover ###################!!!!!!!!!!!!!!!!!!!!!!
 
+# model02은 sensor publisher, camera publisher, command subscriber 3개로 분리한 것
 # 사용하기전에 ###################!!!!!!!!!!!!!!!!!!!!!! 부분 수정후 사용
 
 class CameraPublisher:

@@ -3,6 +3,7 @@ import threading
 import time
 from datasend.sungjin.sensingRover import SensingRover ###################!!!!!!!!!!!!!!!!!!!!!!
 
+# model01은 sensor publisher, camera publisher, command subscriber를 하나로 통합한 것
 # 사용하기전에 ###################!!!!!!!!!!!!!!!!!!!!!! 부분 수정후 사용
 
 class MqttNetwork:
