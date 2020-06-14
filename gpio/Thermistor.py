@@ -8,6 +8,8 @@ class Thermistor(threading.Thread):
         self.__pcf8591 = pcf8591
         self.__ain = ain
         self.cur_temp = 0
+        super.__init__(daemon=True) #######
+        super.start() #####
 
     def read(self):
         analog = self.__pcf8591.read(self.__ain)
