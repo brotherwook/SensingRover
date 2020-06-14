@@ -58,6 +58,7 @@ class MqttNetwork:
             message = self.sensingRover.cameraMessage()
             self.__client.publish(self.__cameraTopic, message, retain=False)
             # print("발행 내용:", self.__cameraTopic, message)
+            time.sleep(0.01) # 지연 현상 해소
 
     def __subscribe(self, client):
         topic = self.__commandTopic
