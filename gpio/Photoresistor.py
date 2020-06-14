@@ -15,7 +15,9 @@ class Photoresistor(threading.Thread):
         return value
 
     def run(self):
-        self.photolevel = self.read()
+        while True: #####
+            self.photolevel = self.read()
+            time.sleep(0.5) #####
 
 if __name__ == '__main__':
     try:
