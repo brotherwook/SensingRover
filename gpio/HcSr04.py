@@ -1,8 +1,9 @@
 import RPi.GPIO as GPIO
 import time
+import threading
 
 
-class HcSr04:
+class HcSr04(threading.Thread):
     def __init__(self, trigpin=None, echopin=None):
         self.__trigpin = trigpin
         self.__echopin = echopin
@@ -10,6 +11,9 @@ class HcSr04:
         GPIO.setwarnings(False)
         GPIO.setup(trigpin, GPIO.OUT)
         GPIO.setup(echopin, GPIO.IN)
+        self.dist = 0
+        super().__init__(daemon=True)
+        super().start()
 
     def distance(self):
         # trigger pin High, 10마이크로초 동안 유지
@@ -33,8 +37,12 @@ class HcSr04:
         # 거리 계산(단위: cm)
         during = stopTime - startTime
         dist = during * (343 / 2) * 100
-
         return dist
+
+    def run(self):
+        while True:
+            self.dist = self.distance()
+            time.sleep(0.3)
 
 
 #########################################################

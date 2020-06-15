@@ -1,20 +1,22 @@
 import RPi.GPIO as GPIO
 import time
+import threading
 
 
 class Laser:
     def __init__(self, lazerpin):
-        self.__lazerpin = lazerpin = 37    # pin11
+        self.__lazerpin = lazerpin    # pin11
+        self.state = "OFF"
         GPIO.setmode(GPIO.BOARD)       # Numbers GPIOs by physical location
         GPIO.setup(lazerpin, GPIO.OUT)   # Set LedPin's mode is output
         GPIO.output(lazerpin, GPIO.HIGH) # Set LedPin high(+3.3V) to off led
 
     def lazerOn(self):
-        print('...Laser on')
+        self.state = "ON"
         GPIO.output(self.__lazerpin, GPIO.LOW)  # led on
 
     def lazerOff(self):
-        print('Laser off...')
+        self.state = "OFF"
         GPIO.output(self.__lazerpin, GPIO.HIGH) # led off
 
     def destroy(self):

@@ -1,18 +1,26 @@
 import RPi.GPIO as GPIO
 import time
+import threading
 
 
-class Tracker:
+class Tracker(threading.Thread):
     def __init__(self, trackpin):
         self.___trackpin = trackpin
+        self.state = None
         GPIO.setmode(GPIO.BOARD)       # Numbers GPIOs by physical location
         GPIO.setup(trackpin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        super().__init__()
+        super().start()
+
+    def run(self):
+        while True:
+            self.read()
 
     def read(self):
         if GPIO.input(self.___trackpin) == GPIO.LOW:
-            print('...White line is detected')
+            self.state = "White"
         else:
-            print('...Black line is detected')
+            self.state = "Black"
 
 
 if __name__ == '__main__':     # Program start from here
