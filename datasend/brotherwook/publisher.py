@@ -4,7 +4,7 @@ import time
 from datasend.brotherwook.sensingRover import SensingRover
 
 class MqttPublisher:
-    def __init__(self, brokerIp=None, brokerPort=1883, topic=None):
+    def __init__(self, SensingRover, brokerIp=None, brokerPort=1883, topic=None):
         self.__brokerIp = brokerIp
         self.__brokerPort = brokerPort
         self.__topic = topic
@@ -12,7 +12,7 @@ class MqttPublisher:
         self.__client.on_connect = self.__on_connect
         self.__client.on_disconnect = self.__on_disconnect
         self.__stop = False
-        self.sensingRover = SensingRover()
+        self.sensingRover = SensingRover
 
     def __on_connect(self):
         print("** connection **")
@@ -25,9 +25,9 @@ class MqttPublisher:
         self.__stop = False
         self.__client.loop_start()
         while not self.__stop:
-            message = self.sensingRover.message()
+            message = self.sensingRover.sensorMessage()
             self.__client.publish(self.__topic, message, retain=False)
-            print("발행 내용:", self.__topic, message)
+           # print("발행 내용:", self.__topic, message)
             time.sleep(1)
         self.__client.loop_stop()
 
