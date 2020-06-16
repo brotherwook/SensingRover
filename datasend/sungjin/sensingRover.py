@@ -26,7 +26,7 @@ class SensingRover:
         self.photo = Photoresistor(self.pcf8591, 0) # 클래스 생성자에서 스레드 생성
         self.led = RgbLed(redpin=29, greenpin=31, bluepin=36)
         self.servo1 = Sg90(self.pca9685, 0)  # 카메라 서보1
-        self.servo2 = Sg90(self.pca9685, 1)  # 카메라 서보2
+        self.servo2 = Sg90(self.pca9685, 2)  # 카메라 서보2
         self.servo3 = Sg90(self.pca9685, 8)  # 초음파 서보
         self.servo4 = Sg90(self.pca9685, 9)  # 앞바퀴 서보
         self.thermistor = Thermistor(self.pcf8591, 1) # 클래스 생성자에서 스레드 생성
