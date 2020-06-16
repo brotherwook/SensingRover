@@ -58,4 +58,10 @@ class SensingRover:
         return message
 
     def write(self,message):
-        self.DCMoter.setSpeed(message["speed"])
+        print(message)
+        if message["led"] == "red":
+            self.led.red()
+        if message["led"] == "green":
+            self.led.green()
+        if message["led"] == "blue":
+            self.led.blue()

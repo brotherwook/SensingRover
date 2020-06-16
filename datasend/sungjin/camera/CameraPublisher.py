@@ -11,6 +11,7 @@ class CameraPublisher:
         self.__client.on_connect = self.__on_connect
         self.__client.on_disconnect = self.__on_disconnect
         self.state = "off"
+        print(self.__brokerIp)
 
     def __on_connect(self, client, userdata, flags, result_code):
         self.state = "on"
