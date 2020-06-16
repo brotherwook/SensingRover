@@ -1,4 +1,5 @@
-import Jetson.GPIO as GPIO
+#import Jetson.GPIO as GPIO
+import RPi.GPIO as GPIO
 import time
 
 class RgbLed:

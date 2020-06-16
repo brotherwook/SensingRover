@@ -1,11 +1,11 @@
 import time
-import gpio.Pca9685
+import Pca9685
 
 class Sg90:
     def __init__(self, pca9685, frequency=50):
         self.__pca9685 = pca9685
         # Pca9685가 츌력 주파수(hz)를 설정
-        # 대부붙의 모터를 50hz사용
+        # 대부붙의 모터는 50hz사용
         pca9685.frequency = frequency
 
     def __map(self, angle):
