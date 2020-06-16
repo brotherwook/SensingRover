@@ -51,9 +51,9 @@ class SensingRover:
         message = json.dumps(message)
         return message
     
-    def cameraMessage(self): ################## 추가 부분
-        message = self.camera.message #########
-        return message ########################
+    def cameraMessage(self): 
+        message = self.camera.message
+        return message
 
     def write(self,message):
-        self.DCMoter.setSpeed(message["speed"])
+        self.servo3.angle(message)

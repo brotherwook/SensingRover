@@ -3,7 +3,7 @@ import threading
 
 
 class MqttSubscriber:
-    def __init__(self, brokerip=None, brokerport=1883, topic=None):
+    def __init__(self, SensingRover, brokerip=None, brokerport=1883, topic=None):
         self.__brokerip = brokerip
         self.__brokerport = brokerport
         self.__topic = topic
@@ -11,6 +11,7 @@ class MqttSubscriber:
         self.__client.on_connect = self.__on_connect
         self.__client.on_disconnect = self.__on_disconnect
         self.__client.on_message = self.__on_message
+        self.sensingRover = SensingRover
 
     def __on_connect(self, client, userdata, flags, rc):
         print("** connection **")
@@ -25,6 +26,9 @@ class MqttSubscriber:
             message.topic,
             message.qos
         ))
+        if str(message.topic).__contains__("/servo"):
+            self.sensingRover.write(int(message.payload))
+
 
     def start(self):
         thread = threading.Thread(target=self.__subscribe)

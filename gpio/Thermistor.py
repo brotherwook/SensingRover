@@ -8,8 +8,8 @@ class Thermistor(threading.Thread):
         self.__pcf8591 = pcf8591
         self.__ain = ain
         self.cur_temp = 0
-        super.__init__(daemon=True) #####
-        super.start() #####
+        super().__init__(daemon=True)
+        super().start()
 
     def read(self):
         analog = self.__pcf8591.read(self.__ain)
@@ -19,9 +19,9 @@ class Thermistor(threading.Thread):
         return temp - 273.15
 
     def run(self):
-        while True: #####
+        while True:
             self.cur_temp = self.read()
-            time.sleep(0.5) #####
+            time.sleep(0.5)
 
 
 if __name__ == '__main__':
