@@ -1,21 +1,21 @@
-import RPI.GPIO as GPIO
+import RPi.GPIO as GPIO
 
-class LazerEmitter:
+class LaserEmitter:
 
     ON = "on"
     OFF = "off"
 
     def __init__(self, channel):
         self.__channel = channel
-        self.state = LazerEmitter.ON
+        self.state = LaserEmitter.ON
         GPIO.setmode(GPIO.BOARD)
         GPIO.setwarnings(False)
         GPIO.setup(channel, GPIO.OUT, initial=GPIO.HIGH)
 
     def on(self):
-        self.state = LazerEmitter.ON
+        self.state = LaserEmitter.ON
         GPIO.output(self.__channel, GPIO.LOW)
 
     def off(self):
-        self.state = LazerEmitter.OFF
+        self.state = LaserEmitter.OFF
         GPIO.output(self.__channel, GPIO.HIGH)
