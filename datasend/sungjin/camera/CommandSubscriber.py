@@ -1,13 +1,13 @@
 import paho.mqtt.client as mqtt
 import threading
 import time
-from datasend.sungjin.sensingRover import SensingRover  ###################!!!!!!!!!!!!!!!!!!!!!!
+from datasend.sungjin.sensingRover import SensingRover ###################!!!!!!!!!!!!!!!!!!!!!!
+import json
 
-
-# model03은 sensor publisher, camera publisher, command subscriber를 publisher(sensor, camera)와 subcriber(command) 2개로 구분한 것
+# model02은 sensor publisher, camera publisher, command subscriber 3개로 분리한 것
 # 사용하기전에 ###################!!!!!!!!!!!!!!!!!!!!!! 부분 수정후 사용
 
-class MqttSubscriber:
+class CommandSubscriber:
     def __init__(self, brokerIp=None, brokerPort=1883, commandTopic=None):
         self.__brokerIp = brokerIp
         self.__brokerPort = brokerPort
@@ -27,31 +27,11 @@ class MqttSubscriber:
         print("** mqtt disconnected **")
 
     def __on_message(self, client, userdata, message):
-        data = str(message.payload, encoding="UTF-8")
-        print(data)
-        angleud = self.sensingRover.servo1.cur_angle
-        anglelr = self.sensingRover.servo2.cur_angle
-        if data == 'CameraUp':
-            angleud += 5
-            if angleud > 180:
-                angleud = 180
-            self.sensingRover.servo1.angle(angleud)
-        if data == 'CameraDown':
-            angleud -= 5
-            if angleud < 0:
-                angleud = 0
-            self.sensingRover.servo1.angle(angleud)
-        if data == 'CameraLeft':
-            anglelr += 5
-            if anglelr > 180:
-                anglelr = 180
-            self.sensingRover.servo2.angle(anglelr)
-        if data == 'CameraRight':
-            anglelr -= 5
-            if anglelr < 0:
-                anglelr = 0
-            self.sensingRover.servo2.angle(anglelr)
-        # SensingRover의 write() 호출
+        strMessage = str(message.payload, encoding="UTF-8")
+        strMessage = json.loads(strMessage)
+        print("수신 내용:", strMessage)
+        self.sensingRover.write(strMessage)
+        pass # SensingRover의 write() 호출
         # print("구독 내용: {}, 토픽: {}, Qos: {}".format(
         #     str(message.payload, encoding="UTF-8"),
         #     message.topic,
@@ -75,8 +55,6 @@ class MqttSubscriber:
         self.__stop = True
         self.__client.disconnect()
 
-
 if __name__ == "__main__":
-    mqttSubscriber = MqttSubscriber(brokerIp="192.168.3.131", brokerPort=1883,
-                                    commandTopic="/command")  ###################!!!!!!!!!!!!!!!!!!!!!!
-    mqttSubscriber.start()
+    commandSubscriber = CommandSubscriber(brokerIp="192.168.3.250", brokerPort=1883, commandTopic="/command") ###################!!!!!!!!!!!!!!!!!!!!!!
+    commandSubscriber.start()
