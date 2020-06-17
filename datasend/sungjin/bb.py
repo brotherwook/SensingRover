@@ -1,12 +1,21 @@
 import time
-import datasend.sungjin.MqttNetwork.model03.MqttPublisher as publisher
-import datasend.sungjin.MqttNetwork.model03.MqttSubscriber as subscriber
+import datasend.sungjin.camera.SensorPublisher as publisher
+import datasend.sungjin.camera.CommandSubscriber as subscriber
+from datasend.sungjin.camera.CameraPublisher import CameraPublisher
+from gpio.Camera import Camera
+from datasend.sungjin.sensingRover import SensingRover
+sensingRover = SensingRover()
+publisher = publisher.SensorPublisher(brokerIp="192.168.3.131", brokerPort=1883, sensorTopic='/sensor',sensingRover=sensingRover)
+subscriber = subscriber.CommandSubscriber(brokerIp="192.168.3.131", brokerPort=1883, commandTopic="/command",sensingRover=sensingRover)
 
-publisher = publisher.MqttPublisher(brokerIp="192.168.3.131", brokerPort=1883, cameraTopic='/camerapub',
-                                    sensorTopic='/sensor')
-subscriber = subscriber.MqttSubscriber(brokerIp="192.168.3.131", brokerPort=1883, commandTopic="/command")
 publisher.start()
 subscriber.start()
-if __name__ == '__main__':
-    publisher.sensingRover.servo1.angle(10)
-    publisher.sensingRover.servo2.angle(120)
+
+# cameraPublisher = CameraPublisher(brokerIp="192.168.3.131", brokerPort=1883, cameraTopic="/camerapub")
+# cameraPublisher.start()
+#
+# while cameraPublisher.state == "off":
+#     pass
+#
+# print("camera on")
+# camera = Camera(cameraPublisher)

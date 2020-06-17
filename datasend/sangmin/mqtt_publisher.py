@@ -28,8 +28,8 @@ class ImageMqttPublisher:
         print("ImageMqttClient mqtt broker disconnected")
 
     def disconnect(self):
-        #if self.client != None:
-        self.client.on_disconnect()
+        if self.client != None:
+            self.client.on_disconnect()
 
     def sendBase64(self, frame):
         if self.client is None:

@@ -3,7 +3,6 @@ from Pca9685 import Pca9685
 import time
 
 class DcMotor:
-
     def __init__(self, out1, out2, pca9685, pwm):
         self.__out1 = out1
         self.__out2 = out2
@@ -20,7 +19,6 @@ class DcMotor:
 
     def forward(self):
         GPIO.output(self.__out1,GPIO.HIGH)
-
         GPIO.output(self.__out2,GPIO.LOW)
 
     def backward(self):

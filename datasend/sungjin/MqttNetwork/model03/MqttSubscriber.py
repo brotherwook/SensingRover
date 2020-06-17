@@ -22,6 +22,8 @@ class MqttSubscriber:
     def __on_connect(self, client, userdata, flags, result_code):
         print("** mqtt connected **")
         self.__subscribe(self.__client)
+        self.sensingRover.servo1.angle(30)
+        self.sensingRover.servo2.angle(90)
 
     def __on_disconnect(self, client, userdata, rc):
         print("** mqtt disconnected **")
@@ -43,14 +45,17 @@ class MqttSubscriber:
             self.sensingRover.servo1.angle(angleud)
         if data == 'CameraLeft':
             anglelr += 5
-            if anglelr > 180:
-                anglelr = 180
+            if anglelr > 145:
+                anglelr = 145
             self.sensingRover.servo2.angle(anglelr)
         if data == 'CameraRight':
             anglelr -= 5
-            if anglelr < 0:
-                anglelr = 0
+            if anglelr < 35:
+                anglelr = 35
             self.sensingRover.servo2.angle(anglelr)
+        if data == 'CameraCenter':
+            self.sensingRover.servo1.angle(30)
+            self.sensingRover.servo2.angle(90)
         # SensingRover의 write() 호출
         # print("구독 내용: {}, 토픽: {}, Qos: {}".format(
         #     str(message.payload, encoding="UTF-8"),
