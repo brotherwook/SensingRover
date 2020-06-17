@@ -91,6 +91,7 @@ class RgbLed:
 
     def off(self):
         self.state = RgbLed.OFF
+        print("------------------------------------")
         if self.__redpin is not None:
             GPIO.output(self.__redpin, GPIO.HIGH)
         if self.__greenpin is not None:

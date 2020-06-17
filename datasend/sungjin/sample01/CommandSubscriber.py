@@ -56,55 +56,56 @@ class CommandSubscriber:
         if data == 'LedRed':
             if self.sensingRover.rgbled.state == "off":
                 self.sensingRover.rgbled.red()
-            if self.sensingRover.rgbled.state == 'red':
+            elif self.sensingRover.rgbled.state == 'red':
                 self.sensingRover.rgbled.off()
-            if self.sensingRover.rgbled.state == 'green':
+            elif self.sensingRover.rgbled.state == 'green':
                 self.sensingRover.rgbled.yellow()
-            if self.sensingRover.rgbled.state == 'blue':
+            elif self.sensingRover.rgbled.state == 'blue':
                 self.sensingRover.rgbled.magenta()
-            if self.sensingRover.rgbled.state == 'cyan':
+            elif self.sensingRover.rgbled.state == 'cyan':
                 self.sensingRover.rgbled.white()
-            if self.sensingRover.rgbled.state == 'magenta':
+            elif self.sensingRover.rgbled.state == 'magenta':
                 self.sensingRover.rgbled.blue()
-            if self.sensingRover.rgbled.state == 'yellow':
+            elif self.sensingRover.rgbled.state == 'yellow':
                 self.sensingRover.rgbled.green()
-            if self.sensingRover.rgbled.state == 'white':
+            elif self.sensingRover.rgbled.state == 'white':
                 self.sensingRover.rgbled.cyan()
         if data == 'LedGreen':
             if self.sensingRover.rgbled.state == 'off':
                 self.sensingRover.rgbled.green()
-            if self.sensingRover.rgbled.state == 'red':
+            elif self.sensingRover.rgbled.state == 'red':
                 self.sensingRover.rgbled.yellow()
-            if self.sensingRover.rgbled.state == 'green':
+            elif self.sensingRover.rgbled.state == 'green':
                 self.sensingRover.rgbled.off()
-            if self.sensingRover.rgbled.state == 'blue':
+            elif self.sensingRover.rgbled.state == 'blue':
                 self.sensingRover.rgbled.cyan()
-            if self.sensingRover.rgbled.state == 'cyan':
+            elif self.sensingRover.rgbled.state == 'cyan':
                 self.sensingRover.rgbled.blue()
-            if self.sensingRover.rgbled.state == 'magenta':
+            elif self.sensingRover.rgbled.state == 'magenta':
                 self.sensingRover.rgbled.white()
-            if self.sensingRover.rgbled.state == 'yellow':
+            elif self.sensingRover.rgbled.state == 'yellow':
                 self.sensingRover.rgbled.red()
-            if self.sensingRover.rgbled.state == 'white':
+            elif self.sensingRover.rgbled.state == 'white':
                 self.sensingRover.rgbled.magenta()
         if data == 'LedBlue':
             if self.sensingRover.rgbled.state == 'off':
                 self.sensingRover.rgbled.blue()
-            if self.sensingRover.rgbled.state == 'red':
+            elif self.sensingRover.rgbled.state == 'red':
                 self.sensingRover.rgbled.magenta()
-            if self.sensingRover.rgbled.state == 'green':
+            elif self.sensingRover.rgbled.state == 'green':
                 self.sensingRover.rgbled.cyan()
-            if self.sensingRover.rgbled.state == 'blue':
+            elif self.sensingRover.rgbled.state == 'blue':
                 self.sensingRover.rgbled.off()
-            if self.sensingRover.rgbled.state == 'cyan':
+            elif self.sensingRover.rgbled.state == 'cyan':
                 self.sensingRover.rgbled.white()
-            if self.sensingRover.rgbled.state == 'magenta':
+            elif self.sensingRover.rgbled.state == 'magenta':
                 self.sensingRover.rgbled.green()
-            if self.sensingRover.rgbled.state == 'yellow':
+            elif self.sensingRover.rgbled.state == 'yellow':
                 self.sensingRover.rgbled.white()
-            if self.sensingRover.rgbled.state == 'white':
+            elif self.sensingRover.rgbled.state == 'white':
                 self.sensingRover.rgbled.yellow()
         if data == 'LedOff':
+            print('||||||||||||||||||||||||||||||||')
             self.sensingRover.rgbled.off()
         # SensingRover의 write() 호출
         # print("구독 내용: {}, 토픽: {}, Qos: {}".format(
