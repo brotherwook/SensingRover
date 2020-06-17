@@ -25,7 +25,7 @@ class Camera(threading.Thread):
                     continue
                 message = self.encode(frame)
                 self.cameraPublisher.publish(message)
-                print(message)
+                # print('send')
             else:
                 print("video not open")
 

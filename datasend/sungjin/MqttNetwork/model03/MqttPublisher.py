@@ -11,7 +11,6 @@ class MqttPublisher:
         self.__brokerIp = brokerIp
         self.__brokerPort = brokerPort
         self.__sensorTopic = sensorTopic
-        self.__cameraTopic = cameraTopic
         self.__client = mqtt.Client()
         self.__client.on_connect = self.__on_connect
         self.__client.on_disconnect = self.__on_disconnect

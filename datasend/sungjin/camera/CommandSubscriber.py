@@ -1,14 +1,12 @@
 import paho.mqtt.client as mqtt
 import threading
-import time
-from datasend.sungjin.sensingRover import SensingRover ###################!!!!!!!!!!!!!!!!!!!!!!
-import json
+
 
 # model02은 sensor publisher, camera publisher, command subscriber 3개로 분리한 것
 # 사용하기전에 ###################!!!!!!!!!!!!!!!!!!!!!! 부분 수정후 사용
 
 class CommandSubscriber:
-    def __init__(self, brokerIp=None, brokerPort=1883, commandTopic=None):
+    def __init__(self, brokerIp=None, brokerPort=1883, commandTopic=None, sensingRover=None):
         self.__brokerIp = brokerIp
         self.__brokerPort = brokerPort
         self.__commandTopic = commandTopic
@@ -17,7 +15,7 @@ class CommandSubscriber:
         self.__client.on_disconnect = self.__on_disconnect
         self.__client.on_message = self.__on_message
         self.__stop = False
-        self.sensingRover = SensingRover()
+        self.sensingRover = sensingRover
 
     def __on_connect(self, client, userdata, flags, result_code):
         print("** mqtt connected **")
@@ -28,10 +26,34 @@ class CommandSubscriber:
 
     def __on_message(self, client, userdata, message):
         strMessage = str(message.payload, encoding="UTF-8")
-        strMessage = json.loads(strMessage)
-        print("수신 내용:", strMessage)
-        self.sensingRover.write(strMessage)
-        pass # SensingRover의 write() 호출
+        data = str(message.payload, encoding="UTF-8")
+        print(data)
+        angleud = self.sensingRover.servo1.cur_angle
+        anglelr = self.sensingRover.servo2.cur_angle
+        if data == 'CameraUp':
+            angleud += 5
+            if angleud > 180:
+                angleud = 180
+            self.sensingRover.servo1.angle(angleud)
+        if data == 'CameraDown':
+            angleud -= 5
+            if angleud < 0:
+                angleud = 0
+            self.sensingRover.servo1.angle(angleud)
+        if data == 'CameraLeft':
+            anglelr += 5
+            if anglelr > 145:
+                anglelr = 145
+            self.sensingRover.servo2.angle(anglelr)
+        if data == 'CameraRight':
+            anglelr -= 5
+            if anglelr < 35:
+                anglelr = 35
+            self.sensingRover.servo2.angle(anglelr)
+        if data == 'CameraCenter':
+            self.sensingRover.servo1.angle(30)
+            self.sensingRover.servo2.angle(90)
+        # SensingRover의 write() 호출
         # print("구독 내용: {}, 토픽: {}, Qos: {}".format(
         #     str(message.payload, encoding="UTF-8"),
         #     message.topic,
@@ -55,6 +77,8 @@ class CommandSubscriber:
         self.__stop = True
         self.__client.disconnect()
 
+
 if __name__ == "__main__":
-    commandSubscriber = CommandSubscriber(brokerIp="192.168.3.250", brokerPort=1883, commandTopic="/command") ###################!!!!!!!!!!!!!!!!!!!!!!
+    commandSubscriber = CommandSubscriber(brokerIp="192.168.3.250", brokerPort=1883,
+                                          commandTopic="/command")  ###################!!!!!!!!!!!!!!!!!!!!!!
     commandSubscriber.start()
