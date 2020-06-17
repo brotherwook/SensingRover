@@ -13,16 +13,20 @@ class Photoresistor():
         self.stop = False
 
     def read(self):
-        temp = self.__pcf8591.read(self.__ain)
-        temp = 5 * float(temp) / 255
-        temp = 10000 * temp / (5 - temp)
-        temp = 1 / ((math.log(temp / 10000) / 3950) + (1 / (273.15 + 25)))
-        return (temp - 273.15)
+        try:
+            temp = self.__pcf8591.read(self.__ain)
+            temp = 5 * float(temp) / 255
+            temp = 10000 * temp / (5 - temp)
+            temp = 1 / ((math.log(temp / 10000) / 3950) + (1 / (273.15 + 25)))
+        except:
+            return self.lightValue
+        else:
+            return (temp - 273.15)
 
     def run(self):
         while self.stop:
             self.lightValue = self.read()
-            # time.sleep(0.5)
+            time.sleep(0.5)
 
     def on(self):
         self.stop = True
@@ -40,7 +44,7 @@ if __name__ == "__main__":
         while True:
             light = sensor.read()
             print("조도 :{}".format(light))
-            time.sleep(0.5)
+            time.sleep(0.1)
     except KeyboardInterrupt:
         print()
     finally:

@@ -34,7 +34,7 @@ if __name__ == "__main__":
         while True:
             gas = sensor.read()
             print("가스량: {}".format(gas))
-            # time.sleep(0.5)
+            time.sleep(0.1)
 
     except KeyboardInterrupt:
         print()

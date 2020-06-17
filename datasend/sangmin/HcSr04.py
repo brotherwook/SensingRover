@@ -43,7 +43,7 @@ class HcSr04():
     def run(self):
         while self.stop:
             self.dist = self.distance()
-            # time.sleep(0.5)
+            time.sleep(0.5)
 
     def on(self):
         self.stop = True
