@@ -67,5 +67,13 @@ class SensingRover:
 
     # action method
 
+    def action(self, command, topic):
+        if command == "38":
+            self.dcMotorLeft.forward()
+            self.dcMotorRight.forward()
+
+        else:
+            self.dcMotorLeft.stop()
+            self.dcMotorRight.stop()
 
 
