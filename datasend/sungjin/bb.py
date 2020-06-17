@@ -1,10 +1,21 @@
 import time
-import gpio.Pca9685 as Pca9685
-import gpio.Sg90 as Sg90
-import datasend.sungjin.MqttNetwork.model03.MqttPublisher as publisher
-import datasend.sungjin.MqttNetwork.model03.MqttSubscriber as subscriber
+import datasend.sungjin.camera.SensorPublisher as publisher
+import datasend.sungjin.camera.CommandSubscriber as subscriber
+from datasend.sungjin.camera.CameraPublisher import CameraPublisher
+from gpio.Camera import Camera
+from datasend.sungjin.sensingRover import SensingRover
+sensingRover = SensingRover()
+publisher = publisher.SensorPublisher(brokerIp="192.168.3.131", brokerPort=1883, sensorTopic='/sensor',sensingRover=sensingRover)
+subscriber = subscriber.CommandSubscriber(brokerIp="192.168.3.131", brokerPort=1883, commandTopic="/command",sensingRover=sensingRover)
 
-pca9685 = Pca9685.Pca9685()
-udmotor = Sg90.Sg90(pca9685, 0)
-lrmotor = Sg90.Sg90(pca9685, 2)
-poublisher = publisher.MqttPublisher(brokerIp="192.168.3.131", brokerPort=1883, cameraTopic='/camerapub', sensorTopic='/sensor')
+publisher.start()
+subscriber.start()
+
+# cameraPublisher = CameraPublisher(brokerIp="192.168.3.131", brokerPort=1883, cameraTopic="/camerapub")
+# cameraPublisher.start()
+#
+# while cameraPublisher.state == "off":
+#     pass
+#
+# print("camera on")
+# camera = Camera(cameraPublisher)

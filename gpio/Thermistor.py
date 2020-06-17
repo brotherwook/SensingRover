@@ -13,6 +13,8 @@ class Thermistor(threading.Thread):
 
     def read(self):
         analog = self.__pcf8591.read(self.__ain)
+        if analog <= 0:
+            return self.read()
         temp = 5 * float(analog) / 255
         temp = 10000 * temp / (5-temp)
         temp = 1 / (((math.log(temp/10000)) / 3950) + (1/(273.15 + 25)))

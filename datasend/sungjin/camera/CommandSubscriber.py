@@ -1,14 +1,12 @@
 import paho.mqtt.client as mqtt
 import threading
-import time
-from datasend.sungjin.sensingRover import SensingRover  ###################!!!!!!!!!!!!!!!!!!!!!!
 
 
-# model03은 sensor publisher, camera publisher, command subscriber를 publisher(sensor, camera)와 subcriber(command) 2개로 구분한 것
+# model02은 sensor publisher, camera publisher, command subscriber 3개로 분리한 것
 # 사용하기전에 ###################!!!!!!!!!!!!!!!!!!!!!! 부분 수정후 사용
 
-class MqttSubscriber:
-    def __init__(self, brokerIp=None, brokerPort=1883, commandTopic=None):
+class CommandSubscriber:
+    def __init__(self, brokerIp=None, brokerPort=1883, commandTopic=None, sensingRover=None):
         self.__brokerIp = brokerIp
         self.__brokerPort = brokerPort
         self.__commandTopic = commandTopic
@@ -17,18 +15,17 @@ class MqttSubscriber:
         self.__client.on_disconnect = self.__on_disconnect
         self.__client.on_message = self.__on_message
         self.__stop = False
-        self.sensingRover = SensingRover()
+        self.sensingRover = sensingRover
 
     def __on_connect(self, client, userdata, flags, result_code):
         print("** mqtt connected **")
         self.__subscribe(self.__client)
-        self.sensingRover.servo1.angle(30)
-        self.sensingRover.servo2.angle(90)
 
     def __on_disconnect(self, client, userdata, rc):
         print("** mqtt disconnected **")
 
     def __on_message(self, client, userdata, message):
+        strMessage = str(message.payload, encoding="UTF-8")
         data = str(message.payload, encoding="UTF-8")
         print(data)
         angleud = self.sensingRover.servo1.cur_angle
@@ -82,6 +79,6 @@ class MqttSubscriber:
 
 
 if __name__ == "__main__":
-    mqttSubscriber = MqttSubscriber(brokerIp="192.168.3.131", brokerPort=1883,
-                                    commandTopic="/command")  ###################!!!!!!!!!!!!!!!!!!!!!!
-    mqttSubscriber.start()
+    commandSubscriber = CommandSubscriber(brokerIp="192.168.3.250", brokerPort=1883,
+                                          commandTopic="/command")  ###################!!!!!!!!!!!!!!!!!!!!!!
+    commandSubscriber.start()
