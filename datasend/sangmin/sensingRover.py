@@ -3,7 +3,7 @@ from Gas import Gas
 from Thermistor import Thermistor
 from Tracking import TrackingSensor
 from Photoresistor  import Photoresistor
-from HcSr04 import HcSr04       #초음파, 거리 측정
+from HcSr04 import HcSr04       # 초음파, 거리 측정
 
 # actuator module
 from Buzzer import ActiveBuzzer
@@ -11,7 +11,8 @@ from DcMotor import DcMotor
 from Laser import LaserEmitter
 from Lcd1602 import Lcd1602
 from RgbLed import RgbLed
-from Sg90 import Sg90     #서보 모터, 각도 조절
+from Sg90 import Sg90     # 서보 모터, 각도 조절
+from DcMotor import DcMotor # DC 모터, 속도조절
 
 # Hardware PWM control module
 from Pca9685 import Pca9685
@@ -22,8 +23,9 @@ from pcf8591 import Pcf8591
 class SensingRover:
     def __init__(self):
 
-        # sensor module
         self.pcf8591 = Pcf8591(0x48)
+        self.pca9685 = Pca9685()
+        # sensor module
         self.gasSensor = Gas(self.pcf8591, 2)
         self.thermistor =  Thermistor(self.pcf8591, 1)
         self.trackingSensor = TrackingSensor(32)
@@ -38,6 +40,8 @@ class SensingRover:
         self.ultrasonicSensor.on()
 
         # actuator module
+        self.dcMotorLeft = DcMotor(11,12,self.pca9685,5)
+        self.dcMotorRight = DcMotor(13,15,self.pca9685,4)
         """
          웹 클라이언트 구현 후
         """
@@ -60,6 +64,8 @@ class SensingRover:
             message["dist"] = self.ultrasonicSensor.dist
 
         return message
+
+    # action method
 
 
 

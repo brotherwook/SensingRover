@@ -36,16 +36,16 @@ class MqttPublisher:
             else:
                 message = json.dumps(message)
                 self.client.publish(self.pubTopic, message, retain=False)
-                print(message)
+                #print(message)
                 time.sleep(0.5)
         self.client.loop_forever()
 
 
     def __on_connect(self,client, userdata, flags, rc):
-        print("ImageMqttClient mqtt broker connected")
+        print("MqttClient mqtt broker connected")
 
     def __on_disconnect(self,client, userdata, rc):
-        print("ImageMqttClient mqtt broker disconnected")
+        print("MqttClient mqtt broker disconnected")
 
     def disconnect(self):
         self.client.disconnect()
