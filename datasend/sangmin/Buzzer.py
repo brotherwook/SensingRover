@@ -27,7 +27,7 @@ if __name__ == "__main__":
 
 	try:
 	
-		buzzer = ActiveBuzzer(11)
+		buzzer = ActiveBuzzer(35)
 		
 		for i in range(5):
 			buzzer.on()

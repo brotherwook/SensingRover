@@ -24,7 +24,7 @@ class TrackingSensor():
     def run(self):
         while self.stop:
             self.detectColor = self.detect()
-            # time.sleep(0.5)
+            time.sleep(0.5)
 
     def on(self):
         self.stop = True

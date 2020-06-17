@@ -18,17 +18,17 @@ if __name__ == "__main__":
     pca9685 =  Pca9685.Pca9685()
     sg90 = Sg90(pca9685)
 
-    channel = 0
+    channel = 14
     # 0도
-    sg90.angle(channel, 0)
+    sg90.angle(channel, 45)
     time.sleep(2)
 
     # 90도
-    sg90.angle(channel, 90)
+    sg90.angle(channel, 75)
     time.sleep(2)
 
     # 180
-    sg90.angle(channel, 180)
+    sg90.angle(channel, 105)
     time.sleep(2)
 
     print("Program exit")

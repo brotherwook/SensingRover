@@ -37,7 +37,7 @@ class MqttPublisher:
                 message = json.dumps(message)
                 self.client.publish(self.pubTopic, message, retain=False)
                 #print(message)
-                time.sleep(0.5)
+            time.sleep(0.5)
         self.client.loop_forever()
 
 
