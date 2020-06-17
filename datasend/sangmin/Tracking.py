@@ -1,43 +1,24 @@
-import RPi.GPIO as GPIO
-import threading
-import time
-class TrackingSensor():
-    def __init__(self, TrackPin):
+import RPI.GPIO as GPIO
+
+class TrackingSensor:
+    def __init__(self, TrackPin, LedPin):
         self.__TrackPin = TrackPin
-        self.detectColor = None
-        self.stop = False
+        self.__LedPin = LedPin
 
         GPIO.setmode(GPIO.BOARD)
-        GPIO.setwarnings(False)
+        GPIO.setwarning(False)
         GPIO.setup(TrackPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 
-
     def detect(self):
+        detectColor ="Error"
 
         if GPIO.input(self.__TrackPin) == GPIO.LOW:
-            self.detectColor = "White"
+            detectColor = "White"
+            GPIO.output(self.__LedPin, GPIO.LOW)
         else :
-            self.detectColor = "Black"
-        return self.detectColor
+            detectColor = "Black"
+            GPIO.output(self.__LedPin, GPIO.HIGH)
 
-    def run(self):
-        while self.stop:
-            self.detectColor = self.detect()
-            time.sleep(0.5)
+        return detectColor
 
-    def on(self):
-        self.stop = True
-        thread = threading.Thread(target=self.run, daemon= True)
-        thread.start()
-
-    def off(self):
-        self.stop = False
-        self.detectColor = None
-
-if __name__ == "__main__" \
-               "":
-    temp = TrackingSensor(32)
-    while True:
-        print(temp.detect())
-        time.sleep(0.5)

@@ -2,7 +2,6 @@ import paho.mqtt.client as mqtt
 import threading
 from gpio.Camera import Camera
 
-
 class CameraPublisher:
     def __init__(self, brokerIp=None, brokerPort=None, cameraTopic=None):
         self.__brokerIp = brokerIp
@@ -12,7 +11,6 @@ class CameraPublisher:
         self.__client.on_connect = self.__on_connect
         self.__client.on_disconnect = self.__on_disconnect
         self.state = "off"
-        print(self.__brokerIp)
 
     def __on_connect(self, client, userdata, flags, result_code):
         self.state = "on"
@@ -37,9 +35,8 @@ class CameraPublisher:
         self.__stop = True
         self.__client.disconnect()
 
-
 if __name__ == "__main__":
-    cameraPublisher = CameraPublisher(brokerIp="192.168.3.131", brokerPort=1883, cameraTopic="/camerapub")
+    cameraPublisher = CameraPublisher(brokerIp="192.168.3.250", brokerPort=1883, cameraTopic="/camerapub")
     cameraPublisher.start()
 
     while cameraPublisher.state == "off":

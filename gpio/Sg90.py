@@ -22,20 +22,21 @@ class Sg90:
 
 if __name__ == '__main__':
     pca9685 = Pca9685.Pca9685()
-    sg90 = Sg90(pca9685,2)
+    sg90 = Sg90(pca9685)
 
+    channel = 8
 
     while True:
         # 0
-        sg90.angle(0)
+        sg90.angle(channel, 0)
         time.sleep(2)
 
         # 90
-        sg90.angle(90)
+        sg90.angle(channel, 90)
         time.sleep(2)
 
         # 180
-        sg90.angle(180)
+        sg90.angle(channel, 180)
         time.sleep(2)
         print("Program Exit")
 
