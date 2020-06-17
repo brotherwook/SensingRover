@@ -105,7 +105,6 @@ class CommandSubscriber:
             elif self.sensingRover.rgbled.state == 'white':
                 self.sensingRover.rgbled.yellow()
         if data == 'LedOff':
-            print('||||||||||||||||||||||||||||||||')
             self.sensingRover.rgbled.off()
         # SensingRover의 write() 호출
         # print("구독 내용: {}, 토픽: {}, Qos: {}".format(
