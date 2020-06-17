@@ -21,13 +21,13 @@ class MqttSubscriber:
         print("** disconnection **")
 
     def __on_message(self, client, userdata, message):
+        msg = str(message.payload, encoding="UTF-8")
         print("구독 내용: {}, 토픽: {}, Qos: {}".format(
             str(message.payload, encoding="UTF-8"),
             message.topic,
             message.qos
         ))
-        if str(message.topic).__contains__("/servo"):
-            self.sensingRover.write(int(message.payload))
+        self.sensingRover.write(msg, message.topic)
 
 
     def start(self):

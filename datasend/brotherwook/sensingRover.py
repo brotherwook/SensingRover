@@ -55,5 +55,36 @@ class SensingRover:
         message = self.camera.message
         return message
 
-    def write(self,message):
-        self.servo3.angle(message)
+    # if elif 조건에 없으면 아무동작 안하게 만들기
+    def write(self, message, topic):
+        if topic.__contains__("/servo3"):
+            if message.isdecimal():
+                self.servo3.angle(int(message))
+
+        if topic.__contains__("/laser"):
+            if message == "on":
+                self.laser.lazerOn()
+            elif message == "off":
+                self.laser.lazerOff()
+
+        if topic.__contains__("/speed"):
+            if message.isdecimal():
+                self.dcmotor.setSpeed(int(message))
+
+        if topic.__contains__("/direction"):
+            if message == "forward":
+                self.dcmotor.forward()
+            elif message == "backward":
+                self.dcmotor.backward()
+            elif message == "stop":
+                self.dcmotor.stop()
+
+        if topic.__contains__("/buzzer"):
+            if message == "on":
+                print("부저온")
+                self.buzzer.on()
+            elif message == "off":
+                print("부저오프")
+                self.buzzer.off()
+            else:
+                print("엘스")

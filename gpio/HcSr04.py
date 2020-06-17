@@ -46,7 +46,10 @@ class HcSr04(threading.Thread):
 
     def run(self):
         while True:
-            self.dist = self.distance()
+            temp = self.distance()
+            # 튀는 값 방지
+            if 0 < temp < 1000:
+                self.dist = temp
             time.sleep(0.3)
 
 #########################################################
