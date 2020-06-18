@@ -5,7 +5,7 @@ import base64
 class Camera(threading.Thread):
     def __init__(self, cameraPublisher):
         try: # in case camera fails to load properly
-            self.videoCapture = cv2.VideoCapture(0)
+            self.videoCapture = cv2.VideoCapture(1)
             self.videoCapture.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
             self.videoCapture.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
         except: # release camera if opened wrongly

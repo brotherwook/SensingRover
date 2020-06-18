@@ -1,6 +1,6 @@
 import paho.mqtt.client as mqtt
 import threading
-from gpio.Camera import Camera
+from datasend.sangmin.Camera import Camera
 
 class CameraPublisher:
     def __init__(self, brokerIp=None, brokerPort=None, cameraTopic=None):
@@ -34,3 +34,13 @@ class CameraPublisher:
     def stop(self):
         self.__stop= True
         self.__client.disconnect()
+
+if __name__ == "__main__":
+    cameraPublisher = CameraPublisher(brokerIp="192.168.3.223", brokerPort=1883, cameraTopic="/camerapub")
+    cameraPublisher.start()
+
+    while cameraPublisher.state == "off":
+        pass
+
+    print("camera on")
+    camera = Camera(cameraPublisher)
