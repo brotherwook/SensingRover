@@ -33,7 +33,7 @@ class SensingRover:
 
         # sensor module
         self.gasSensor = Gas(self.pcf8591, 2)
-        self.thermistor = Thermistor(self.pcf8591, 1)
+        self.thermistor =  Thermistor(self.pcf8591, 1)
         self.trackingSensor = TrackingSensor(32)
         self.photoresistor = Photoresistor(self.pcf8591,0)
         self.ultrasonicSensor = HcSr04(38,40)

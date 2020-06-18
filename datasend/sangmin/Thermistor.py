@@ -10,16 +10,20 @@ class Thermistor():
         self.stop = False
 
     def read(self):
-        temp = self.__pcf8591.read(self.__ain)  #0~255
-        temp = 5 * float(temp)/255
-        temp = 10000 * temp/(5-temp)
-        temp = 1/((math.log(temp/10000)/3950) + (1/(273.15+25)))
-        return (temp-273.15)
+        try:
+            temp = self.__pcf8591.read(self.__ain)  #0~255
+            temp = 5 * float(temp)/255
+            temp = 10000* temp/(5-temp)
+            temp = 1/((math.log(temp/10000)/3950) + (1/(273.15+25)))
+        except:
+            return self.temperature
+        else:
+            return (temp-273.15)
 
     def run(self):
         while self.stop:
             self.temperature = self.read()
-            # time.sleep(0.5)
+            time.sleep(0.5)
 
     def on(self):
         self.stop = True

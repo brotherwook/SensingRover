@@ -24,7 +24,6 @@ class DcMotor:
         GPIO.output(13, GPIO.LOW)
         GPIO.output(15, GPIO.HIGH)
 
-        self.setSpeed(2000)
 
     def backward(self):
         self.direction = "Backward"
@@ -37,11 +36,8 @@ class DcMotor:
         GPIO.output(13, GPIO.HIGH)
         GPIO.output(15, GPIO.LOW)
 
-        self.setSpeed(2000)
-
     def stop(self):
         self.direction = "Stopped"
-        self.setSpeed(0)
         # 왼쪽 바퀴
         GPIO.output(11, GPIO.HIGH)
         GPIO.output(12, GPIO.HIGH)
@@ -50,15 +46,11 @@ class DcMotor:
         GPIO.output(13, GPIO.HIGH)
         GPIO.output(15, GPIO.HIGH)
 
+        self.setSpeed(0)
+
     def setSpeed(self, speed):
         self.__pca9685.write(5, speed)
         self.__pca9685.write(4, speed)
-        # 0 ~ 4095
-        while not self.speed == speed:
-            if self.speed > speed:
-                self.speed -= 1
-            else:
-                self.speed += 1
         self.speed = speed
 
 

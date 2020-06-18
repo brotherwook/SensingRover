@@ -1,26 +1,14 @@
 import time
-import threading
 from pcf8591 import Pcf8591
 from RgbLed import RgbLed
-
-
-##################################################################
-class Flame(threading.Thread):
+class Flame:
     def __init__(self, pcf8591, ain=0):
         self.__pcf8591 = pcf8591
         self.__ain = ain
-        self.flame = -1
-        super.__init__(daemon=True)
 
     def read(self):
         value = self.__pcf8591.read(self.__ain)
         return value
-
-    def run(self):
-        while True:
-            self.__flame = self.read()
-            time.sleep(0.5)
-##################################################################
 
 if __name__ == "__main__":
     try:

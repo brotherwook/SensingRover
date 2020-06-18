@@ -81,10 +81,8 @@ class SensingRover:
 
         if topic.__contains__("/buzzer"):
             if message == "on":
-                print("부저온")
                 self.buzzer.on()
             elif message == "off":
-                print("부저오프")
                 self.buzzer.off()
             else:
-                print("엘스")
+                pass

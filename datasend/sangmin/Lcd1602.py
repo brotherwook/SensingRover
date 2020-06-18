@@ -7,7 +7,7 @@ import socket
 # 리눅스의 경우 외부와 연결을 한번은 해줘야 ip를 가져올 수 있다.
 def get_interface_ipaddress():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-	# 아래의 ip는 공유기의 ip이다.
+	# 아래의 ip는 공유기의  ip이다.
     s.connect(("192.168.3.1",0))
     ipAddress = s.getsockname()[0]
     s.close()
