@@ -15,6 +15,8 @@ import json
 
 class SensingRover:
     def __init__(self):
+        self.frontTireAngle = 75
+
         self.pcf8591 = Pcf8591(0x48)
         self.pca9685 = Pca9685()
         self.buzzer = ActiveBuzzer(35)
@@ -57,6 +59,8 @@ class SensingRover:
 
     # if elif 조건에 없으면 아무동작 안하게 만들기
     def write(self, message, topic):
+
+        # ============ 형욱 예나 ===============
         if topic.__contains__("/servo3"):
             if message.isdecimal():
                 self.servo3.angle(int(message))
@@ -87,6 +91,7 @@ class SensingRover:
             else:
                 pass
 
+        # =============== 성진 휘래 =================
         if message == 'CameraUp':
             angleud = self.servo1.cur_angle
             angleud += 5
@@ -114,3 +119,26 @@ class SensingRover:
         if message == 'CameraCenter':
             self.servo1.angle(30)
             self.servo2.angle(90)
+
+        # ========== 상민 찬혁 ===========
+            # 좌회전
+        if message == "37":
+            self.frontTireAngle -= 5
+            if self.frontTireAngle < 45:
+                self.frontTireAngle = 45
+            self.servo4.angle(self.frontTireAngle)
+
+        # 우회전
+        if message == "39":
+            self.frontTireAngle += 5
+            if self.frontTireAngle > 105:
+                self.frontTireAngle = 105
+            self.servo4.angle(self.frontTireAngle)
+
+        # 정면
+        if message == "97":
+            self.frontTireAngle = 75
+            self.servo4.angle(self.frontTireAngle)
+
+        if message == "13":
+            self.buzzer.on()
