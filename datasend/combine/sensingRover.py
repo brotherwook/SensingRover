@@ -119,26 +119,36 @@ class SensingRover:
         if message == 'CameraCenter':
             self.servo1.angle(30)
             self.servo2.angle(90)
+        if message == 'LedRed':
+            self.led.red()
+        if message == 'LedGreen':
+            self.led.green()
+        if message == 'LedBlue':
+            self.led.blue()
+        if message == 'LedOff':
+            self.led.off()
 
         # ========== 상민 찬혁 ===========
-            # 좌회전
-        if message == "37":
-            self.frontTireAngle -= 5
-            if self.frontTireAngle < 45:
-                self.frontTireAngle = 45
-            self.servo4.angle(self.frontTireAngle)
+        if topic.__contains__("/order"):
+                # 좌회전
+            if message == "37":
+                print("좌회전")
+                self.frontTireAngle -= 5
+                if self.frontTireAngle < 45:
+                    self.frontTireAngle = 45
+                self.servo4.angle(self.frontTireAngle)
 
-        # 우회전
-        if message == "39":
-            self.frontTireAngle += 5
-            if self.frontTireAngle > 105:
-                self.frontTireAngle = 105
-            self.servo4.angle(self.frontTireAngle)
+            # 우회전
+            if message == "39":
+                self.frontTireAngle += 5
+                if self.frontTireAngle > 105:
+                    self.frontTireAngle = 105
+                self.servo4.angle(self.frontTireAngle)
 
-        # 정면
-        if message == "97":
-            self.frontTireAngle = 75
-            self.servo4.angle(self.frontTireAngle)
+            # 정면
+            if message == "97":
+                self.frontTireAngle = 75
+                self.servo4.angle(self.frontTireAngle)
 
-        if message == "13":
-            self.buzzer.on()
+            if message == "13":
+                self.buzzer.on()
