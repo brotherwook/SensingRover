@@ -133,21 +133,21 @@ class SensingRover:
                 # 좌회전
             if message == "37":
                 print("좌회전")
-                self.frontTireAngle -= 5
-                if self.frontTireAngle < 45:
-                    self.frontTireAngle = 45
+                self.frontTireAngle -= 10
+                if self.frontTireAngle < 0:
+                    self.frontTireAngle = 0
                 self.servo4.angle(self.frontTireAngle)
 
             # 우회전
             if message == "39":
-                self.frontTireAngle += 5
-                if self.frontTireAngle > 105:
-                    self.frontTireAngle = 105
+                self.frontTireAngle += 10
+                if self.frontTireAngle > 180:
+                    self.frontTireAngle = 180
                 self.servo4.angle(self.frontTireAngle)
 
             # 정면
             if message == "97":
-                self.frontTireAngle = 75
+                self.frontTireAngle = 90
                 self.servo4.angle(self.frontTireAngle)
 
             if message == "13":
