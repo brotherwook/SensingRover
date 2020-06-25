@@ -83,6 +83,12 @@ class SensingRover:
             elif message == "stop":
                 self.dcmotor.stop()
 
+        if topic.__contains__("/lcd"):
+            if topic.__contains__("/lcd1"):
+                self.lcd.write(0, 0, message)
+            elif topic.__contains__("/lcd2"):
+                self.lcd.write(0, 1, message)
+
         if topic.__contains__("/buzzer"):
             if message == "on":
                 self.buzzer.on()
@@ -130,7 +136,7 @@ class SensingRover:
 
         # ========== 상민 찬혁 ===========
         if topic.__contains__("/order"):
-                # 좌회전
+            # 좌회전
             if message == "37":
                 print("좌회전")
                 self.frontTireAngle -= 10
